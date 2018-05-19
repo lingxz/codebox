@@ -1,0 +1,12 @@
+[
+  { "caption": "CodeBox: List…" , "command": "codebox_list" } ,
+  { "caption": "CodeBox: New…"  , "command": "codebox_new"  } ,
+  { 
+    "caption": "Preferences: CodeBox Settings", 
+    "command": "edit_settings", 
+    "args": {
+        "base_file": "${packages}/CodeBox/codebox.sublime-settings",
+        "default": "// Settings in here override those in \"CodeBox/codebox.sublime-settings\",\n\n{\n\t$0\n}\n",
+    } 
+  },
+]
