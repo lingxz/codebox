@@ -28,7 +28,8 @@ def setup_snippets_list(file_list):
     return return_sublist(file_list, indices)
 
 
-def find_snippets(self, root, exclude=[], mode="all"):
+def find_snippets(self, root, mode="all", exclude=[]):
+    exclude_files = settings().get("exclude_files")
     snippet_files = []
     for path, subdirs, files in os.walk(root, topdown=True):
         if exclude:
@@ -37,15 +38,18 @@ def find_snippets(self, root, exclude=[], mode="all"):
         if mode == "all":
             for name in files:
                 title = os.path.join(relpath, name).replace(".\\", "").replace("\\", "/")
+                if title in exclude_files:
+                    continue
                 modified_str = time.strftime(
                     "Last modified: %d/%m/%Y %H:%M", time.gmtime(os.path.getmtime(os.path.join(path, name))))
-                snippet_files.append(
-                    [title, os.path.join(path, name), modified_str])
+                snippet_files.append([title, os.path.join(path, name), modified_str])
         elif mode == "notes":
             for name in files:
                 for ext in settings().get("note_file_extensions"):
                     if fnmatch.fnmatch(name, "*." + ext):
                         title = os.path.join(relpath, name).replace(".\\", "").replace("\\", "/")
+                        if title in exclude_files:
+                            continue
                         modified_str = time.strftime("Last modified: %d/%m/%Y %H:%M", time.gmtime(os.path.getmtime(os.path.join(path, name))))
                         snippet_files.append([title, os.path.join(path, name), modified_str])
 
