@@ -1,3 +1,4 @@
 {
   "root": "~/Dropbox/codebox/",
+  "note_file_extensions": ["md", "txt"]
 }

@@ -2,6 +2,8 @@ import sublime
 import sublime_plugin
 import os
 import time
+import re
+import fnmatch
 
 
 def settings():
@@ -27,31 +29,37 @@ def setup_snippets_list(file_list):
     return return_sublist(file_list, indices)
 
 
-def find_snippets(self, root, exclude=[]):
+def find_snippets(self, root, exclude=[], mode="all"):
     snippet_files = []
     for path, subdirs, files in os.walk(root, topdown=True):
         if exclude:
             subdirs[:] = [d for d in subdirs if d not in exclude]
         relpath = os.path.relpath(path, root)
-        for name in files:
-            title = os.path.join(relpath, name).replace(
-                ".\\", "").replace("\\", "/")
-            modified_str = time.strftime(
-                "Last modified: %d/%m/%Y %H:%M", time.gmtime(os.path.getmtime(os.path.join(path, name))))
-            snippet_files.append(
-                [title, os.path.join(path, name), modified_str])
+        if mode == "all":
+            for name in files:
+                title = os.path.join(relpath, name).replace(".\\", "").replace("\\", "/")
+                modified_str = time.strftime(
+                    "Last modified: %d/%m/%Y %H:%M", time.gmtime(os.path.getmtime(os.path.join(path, name))))
+                snippet_files.append(
+                    [title, os.path.join(path, name), modified_str])
+        elif mode == "notes":
+            for name in files:
+                for ext in settings().get("note_file_extensions"):
+                    if fnmatch.fnmatch(name, "*." + ext):
+                        title = os.path.join(relpath, name).replace(".\\", "").replace("\\", "/")
+                        modified_str = time.strftime("Last modified: %d/%m/%Y %H:%M", time.gmtime(os.path.getmtime(os.path.join(path, name))))
+                        snippet_files.append([title, os.path.join(path, name), modified_str])
 
-    snippet_files.sort(
-        key=lambda item: os.path.getmtime(item[1]), reverse=True)
+    snippet_files.sort(key=lambda item: os.path.getmtime(item[1]), reverse=True)
     return snippet_files
 
 
 class CodeboxListCommand(sublime_plugin.ApplicationCommand):
 
-    def run(self):
+    def run(self, mode="all"):
         root = get_root()
         self.snippets_dir = root
-        self.file_list = find_snippets(self, root)
+        self.file_list = find_snippets(self, root, mode=mode)
         rlist = setup_snippets_list(self.file_list)
         window = sublime.active_window()
         window.show_quick_panel(rlist, self.open_snippet)
