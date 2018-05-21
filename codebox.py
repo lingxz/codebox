@@ -2,7 +2,6 @@ import sublime
 import sublime_plugin
 import os
 import time
-import re
 import fnmatch
 
 
