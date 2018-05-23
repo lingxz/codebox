@@ -2,6 +2,7 @@
   { "caption": "CodeBox: List all…" , "command": "codebox_list", "args": {"mode": "all"} } ,
   { "caption": "CodeBox: List notes...", "command": "codebox_list", "args": {"mode": "notes"} },
   { "caption": "CodeBox: New…"  , "command": "codebox_new"  } ,
+  { "caption": "CodeBox: Insert snippet...", "command": "codebox_insert_list" },
   { 
     "caption": "Preferences: CodeBox Settings", 
     "command": "edit_settings", 

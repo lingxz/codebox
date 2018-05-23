@@ -57,6 +57,32 @@ def find_snippets(self, root, mode="all", exclude=[]):
     return snippet_files
 
 
+class CodeboxInsertListCommand(sublime_plugin.WindowCommand):
+
+    def run(self):
+        root = get_root()
+        self.snippets_dir = root
+        self.file_list = find_snippets(self, root)
+        rlist = setup_snippets_list(self.file_list)
+        window = sublime.active_window()
+        window.show_quick_panel(rlist, self.insert_snippet)
+
+    def insert_snippet(self, index):
+        if index == -1:
+            return
+        file_path = self.file_list[index][1]
+        print(file_path)
+        self.window.run_command("codebox_insert", {"file_path": file_path})
+
+
+class CodeboxInsertCommand(sublime_plugin.TextCommand):
+
+    def run(self, edit, file_path):
+        with open(file_path, 'r') as f:
+            content = f.read()
+        self.view.insert(edit, self.view.sel()[0].begin(), content)
+
+
 class CodeboxListCommand(sublime_plugin.ApplicationCommand):
 
     def run(self, mode="all"):
