@@ -1,5 +1,5 @@
 {
   "root": "~/Dropbox/codebox/",
   "note_file_extensions": ["md", "txt"],
-  "exclude_files": ["notes.sublime-project", "notes.sublime-workspace"]
+  "exclude_files": []
 }
