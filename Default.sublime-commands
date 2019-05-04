@@ -1,14 +1,14 @@
 [
-  { "caption": "CodeBox: List all…" , "command": "codebox_list", "args": {"mode": "all"} } ,
-  { "caption": "CodeBox: List notes...", "command": "codebox_list", "args": {"mode": "notes"} },
-  { "caption": "CodeBox: New…"  , "command": "codebox_new"  } ,
-  { "caption": "CodeBox: Insert snippet...", "command": "codebox_insert_list" },
+  { "caption": "Codebox: List all…" , "command": "codebox_list", "args": {"mode": "all"} } ,
+  { "caption": "Codebox: List notes...", "command": "codebox_list", "args": {"mode": "notes"} },
+  { "caption": "Codebox: New…"  , "command": "codebox_new"  } ,
+  { "caption": "Codebox: Insert snippet...", "command": "codebox_insert_list" },
   { 
-    "caption": "Preferences: CodeBox Settings", 
+    "caption": "Preferences: Codebox Settings", 
     "command": "edit_settings", 
     "args": {
-        "base_file": "${packages}/CodeBox/codebox.sublime-settings",
-        "default": "// Settings in here override those in \"CodeBox/codebox.sublime-settings\",\n\n{\n\t$0\n}\n",
+        "base_file": "${packages}/Codebox/codebox.sublime-settings",
+        "default": "// Settings in here override those in \"Codebox/codebox.sublime-settings\",\n\n{\n\t$0\n}\n",
     } 
   },
 ]
